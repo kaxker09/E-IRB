@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>E-IRB</title>
+    </head>
+
+    <body>
+
+        <h1>Zmiana hasła</h1>
+        
+        <form action="/resetPassword" method="post" >
+            <label for="newPassword">New password:</label>
+            <input type="newPassword id="newPassword" name="newPassword" required> 
+        <button type="submit">Zatwierdź</button>
+
+    </body>
+
+</html>
+
+<script>
+    const form =document.querySelector('form');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newPassword = form.newPassword.value;
+
+        const url = window.location.href;
+        let lista = url.split('/')
+        let uniqueReset = lista[lista.length -1]
+
+
+
+        try{
+            const res = await fetch('/resetPassword', {
+                method: 'POST',
+                body: JSON.stringify({newPassword, uniqueReset}),
+                headers:{'Content-Type': 'application/json'}
+            });
+
+            const data = await res.json();
+            if(data.user){
+                location.assign('/resetPassword');
+            }
+        }     
+              catch(err){
+                console.log(err);
+                }
+            
+    })
+
+</script>

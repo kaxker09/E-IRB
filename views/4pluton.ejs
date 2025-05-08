@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            E-IRB
+        </title>
+        <link rel="stylesheet" href="/public/stylepluton.css">
+    </head>
+
+
+
+
+    <body>
+        <header>
+            <h2 class="logo">E-IRB</h2>
+            <nav class="navigation">
+                <a href="/dyzurny">Powrót</a>
+                <a href="/logout">Wyloguj się</a>
+            </nav> 
+
+        </header>
+
+        <div class="users">
+            <h2>4 pluton</h2>
+        
+            <% if (users.length > 0) { %>
+                <table  class="table-content">
+                    <thead>
+                        <tr>
+                            <th>Imię</th>
+                            <th>Nazwisko</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% users.forEach(user => { %>
+                            <tr>
+                                <td><%= user.name %></td>
+                                <td><%= user.surname %></td>
+                                <td><%= user.status %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>Brak użytkowników.</p>
+            <% } %>
+        </div>
+        
+
+    </body>
+    <script>
+        
+        function updateData() {
+            fetch('/dyzurny/4pluton', { headers: { "X-Requested-With": "XMLHttpRequest" } }) 
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('stanFaktyczny').textContent = `Stan faktyczny: ${data.stanFaktyczny}`;
+                    document.getElementById('stanEwidencyjny').textContent = `Stan ewidencyjny: ${data.stanEwidencyjny}`;
+                    document.getElementById('stanEwidencyjnyCzwarty').textContent = `Stan ewidencyjny czwarty pluton: ${data.stanEwidencyjnyCzwarty}`;
+                    document.getElementById('stanFaktycznyCzwarty').textContent = `Stan ewidencyjny czwarty pluton: ${data.stanFaktycznyCzwarty}`;
+                   
+                    
+
+                })
+                .catch(err => console.error("Błąd pobierania danych:", err));
+        }
+
+        setInterval(updateData, 10000); 
+
+    
+    </script>
+ 
+</html>

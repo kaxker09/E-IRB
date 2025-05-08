@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            E-IRB
+        </title>
+        <link rel="stylesheet" href="/public/styleadmin.css">
+    </head>
+
+  
+
+    <body>
+        <header>
+            <h2 class="logo">E-IRB</h2>
+            <nav class="navigation">
+                <a href="#">O aplikacji</a>
+                <a href="#">Ustawienia konta</a>
+                <a href="/logout">Wyloguj się</a>
+            </nav> 
+            </header>
+
+            <div class="wrapper">
+                <div class="form-box login">
+                    <h2>1 Pluton</h2>
+                
+
+                <div class="info">
+                    <p>Stan faktyczny: <%= stanFaktycznyPierwszy %></p>
+                    <p id="stanEwidencyjny">Stan ewidencyjny: <%=  stanEwidencyjnyPierwszy %></p>
+                </div>
+
+                <div class="summmary">
+                    <a href = "/dyzurny/1pluton">Podsumowanie</a>
+                 </div>
+                 </div>
+            </div>
+
+
+            <div class="wrapper">
+                <div class="form-box login">
+                    <h2>2 Pluton</h2>
+                
+
+                <div class="info">
+                    <p>Stan faktyczny: <%= stanFaktycznyDrugi %></p>
+                    <p id="stanEwidencyjnyDrugi">Stan ewidencyjny: <%=  stanEwidencyjnyDrugi %></p>
+                </div>
+
+                <div class="summmary">
+                    <a href = "/dyzurny/2pluton">Podsumowanie</a>
+                 </div>
+
+            </div>
+            </div>
+
+            <div class="wrapper">
+                <div class="form-box login">
+                    <h2>3 Pluton</h2>
+                
+
+                <div class="info">
+                    <p>Stan faktyczny: <%= stanEwidencyjnyTrzeci %></p>
+                    <p id="stanEwidencyjnyTrzeci">Stan ewidencyjny: <%=  stanEwidencyjnyTrzeci %></p>
+                </div>
+
+                <div class="summmary">
+                    <a href = "/dyzurny/3pluton">Podsumowanie</a>
+                 </div>
+
+            </div>
+            </div>
+
+            <div class="wrapper">
+                <div class="form-box login">
+                    <h2>4 Pluton</h2>
+                
+
+                <div class="info">
+                    <p>Stan faktyczny: <%= stanFaktycznyCzwarty %></p>
+                    <p id="stanFaktycznyCzwarty">Stan ewidencyjny: <%=  stanEwidencyjnyCzwarty %></p>
+                </div>
+
+                <div class="summmary">
+                    <a href = "/dyzurny/4pluton">Podsumowanie</a>
+                 </div>
+
+            </div>
+            </div>
+
+            <div class="wrapper">
+                <div class="form-box login">
+                    <h2>Podsumowanie</h2>
+                
+
+                <div class="info">
+                    <p>Stan faktyczny: <%= stanFaktycznyPierwszy %></p>
+                    <p id="stanEwidencyjny">Stan ewidencyjny: <%=  stanEwidencyjnyPierwszy %></p>
+                </div>
+            </div>
+            </div>
+
+    </body>
+
+    <script>
+                    function updateData() {
+            fetch('/dyzurny', { headers: { "X-Requested-With": "XMLHttpRequest" } }) 
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('stanFaktyczny').textContent = `Stan faktyczny: ${data.stanFaktyczny}`;
+                    document.getElementById('stanEwidencyjny').textContent = `Stan ewidencyjny: ${data.stanEwidencyjny}`;
+                    document.getElementById('stanEwidencyjnyPierwszy').textContent = `Stan ewidencyjny pierwszy pluton: ${data.stanEwidencyjnyPierwszy}`;
+                    document.getElementById('stanFaktycznyPierwszy').textContent = `Stan ewidencyjny pierwszy pluton: ${data.stanFaktycznyPierwszy}`;
+                    document.getElementById('stanEwidencyjnyDrugi').textContent = `Stan ewidencyjny drugi pluton: ${data.stanEwidencyjnyDrugi}`;
+                    document.getElementById('stanFaktycznyDrugi').textContent = `Stan ewidencyjny drugi pluton: ${data.stanFaktycznyDrugi}`;        
+                    document.getElementById('stanEwidencyjnyTrzeci').textContent = `Stan ewidencyjny trzeci pluton: ${data.stanEwidencyjnyTrzeci}`;
+                    document.getElementById('stanFaktycznyTrzeci').textContent = `Stan ewidencyjny trzeci pluton: ${data.stanFaktycznyTrzeci}`;
+                    document.getElementById('stanEwidencyjnyCzwarty').textContent = `Stan ewidencyjny czwarty pluton: ${data.stanEwidencyjnyCzwarty}`;
+                    document.getElementById('stanFaktycznyCzwarty').textContent = `Stan ewidencyjny czwarty pluton: ${data.stanFaktycznyCzwarty}`;
+                    
+
+                })
+                .catch(err => console.error("Błąd pobierania danych:", err));
+        }
+
+        setInterval(updateData, 10000); 
+
+    
+    
+    </script>
+
+</html>

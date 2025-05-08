@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            E-IRB
+        </title>
+        <link rel="stylesheet" href="/public/styleuser.css">
+    </head>
+
+    <body>
+
+        <header>
+            <h2 class="logo">E-IRB</h2>
+            <nav class="navigation">
+                <a href="#">Ustawienia</a>
+                <a href="/logout">Wyloguj</a>
+            </nav>  
+        </header>
+
+        <div class="wrapper">
+
+            <div class="form-box login">
+            <h2>User: <%= user.name%></h2>
+            
+            <input class="btn" type="button" id="action" value="<%=user.action %>">
+            
+            
+            <div class="user-status">
+                <p id="status">Status: <%= user.status %></p>
+             </div>
+
+             <div class="user-info">
+                <p id="role">Rola: <%= user.role %></p>
+                <p id="platoon">Pluton: <%= user.platoon %></p> 
+                <p id="section">Drużyna: <%= user.section %></p>
+            </div>
+        
+        
+        
+      
+        <script>
+            function userStatus(userID){
+                const button = document.getElementById("action");
+                const status = document.getElementById("status");
+
+                button.addEventListener("click", async(e) => {
+                    e.preventDefault()
+                  
+                    try{
+                    const res = await fetch('/user', {
+                        method: 'POST',
+                        body: JSON.stringify({_id: userID}),
+                        headers:{'Content-Type': 'application/json'}
+                    });
+                    const data = await res.json();
+
+                
+                    if(data.status){
+                        button.value = data.action;
+                        status.textContent = `Status: ${data.status}`;
+                    }
+
+                
+                }
+                catch(err){
+                    console.log(err);
+                }
+                })
+            }
+            userStatus("<%= user._id%>");
+        </script>
+
+    </body>
+
+</html>

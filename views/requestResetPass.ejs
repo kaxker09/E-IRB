@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            E-IRB
+        </title>
+        <link rel="stylesheet" href="/public/styleregister.css">
+    </head>
+
+    <body>
+
+        <header>
+            <h2 class="logo">E-IRB</h2>
+            <nav class="navigation">
+                <a href="/">Strona główna</a>
+            </nav>
+        </header>
+
+        <div class="wrapper">
+
+            <div class="form-box register">
+
+                <h2>Przypominanie hasła</h2>
+                <form action="/requestResetPassword" method="post">
+
+                    <div class="input-box">
+                        <input type="mail" id="mail" name="mail" required>
+                        <label>Mail</label>
+                    </div>
+                    <button type="submit" class="btn">Zatwierdź</button>
+
+                </form>
+
+        </div>
+
+    
+
+    </body>
+
+</html>
+
+<script>
+    const form =document.querySelector('form');
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const mail = form.mail.value;
+
+        try{
+            const res = await fetch('/requestResetPassword', {
+                method: 'POST',
+                body: JSON.stringify({mail}),
+                headers:{'Content-Type': 'application/json'}
+            });
+
+            const data = await res.json();
+            if(data.user){
+                location.assign('/requestResetPassword');
+            }
+        }     
+              catch(err){
+                console.log(err);
+                }
+            
+    })
+
+</script>
